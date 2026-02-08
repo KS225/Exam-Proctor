@@ -1,0 +1,28 @@
+.profile-card {
+  max-width: 500px;
+  margin: 40px auto;
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.profile-card h2 {
+  margin-bottom: 6px;
+}
+
+.role {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.profile-info {
+  text-align: left;
+}
+
+.profile-info div {
+  margin-bottom: 10px;
+  font-size: 15px;
+}

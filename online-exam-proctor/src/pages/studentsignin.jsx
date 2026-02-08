@@ -47,7 +47,7 @@ const StudentSignin = () => {
       localStorage.setItem("role", "student");
 
       // ✅ Redirect
-      navigate("/student/dashboard");
+      navigate("/studentdashboard");
     } catch (error) {
       alert("Server error. Try again later.");
     } finally {

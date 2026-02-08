@@ -48,7 +48,7 @@ const TeacherSignin = () => {
       localStorage.setItem("role", "teacher");
 
       // ✅ Redirect
-      navigate("/teacher/dashboard");
+      navigate("/teacherdashboard");
     } catch (error) {
       alert("Server error. Try again later.");
     } finally {
