@@ -1,0 +1,50 @@
+/* =========================
+   FOOTER
+========================= */
+.footer {
+  width: 100%;
+  background: #020617;
+  padding: 70px 24px;
+}
+
+/* =========================
+   FOOTER CONTAINER
+========================= */
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+/* =========================
+   BRAND SECTION
+========================= */
+.footer-brand h3 {
+  color: #e5e7eb;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.footer-brand p {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  max-width: 420px;
+}
+
+/* =========================
+   META INFO
+========================= */
+.footer-meta {
+  text-align: right;
+  font-size: 0.85rem;
+  color: #94a3b8;
+}
+
+.footer-meta p {
+  margin: 4px 0;
+}
