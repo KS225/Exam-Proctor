@@ -1,28 +1,165 @@
+/* =========================
+   PROFILE CARD
+========================= */
 .profile-card {
-  max-width: 500px;
+  max-width: 520px;
   margin: 40px auto;
-  background: #fff;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  background: #ffffff;
+  padding: 32px;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
   text-align: center;
 }
 
-.profile-card h2 {
-  margin-bottom: 6px;
-}
-
-.role {
-  color: #666;
-  font-size: 14px;
+/* =========================
+   PROFILE IMAGE
+========================= */
+.profile-pic-wrapper {
+  display: flex;
+  flex-direction: column;   /* 👈 stack vertically */
+  align-items: center;      /* 👈 center everything */
   margin-bottom: 20px;
 }
 
+.profile-picture {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #f1f1f1;
+}
+
+/* Change photo button */
+.upload-btn {
+  margin-top: 10px;         /* 👈 space below image */
+  font-size: 13px;
+  color: #0d8abc;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.upload-btn:hover {
+  text-decoration: underline;
+}
+
+/* =========================
+   NAME & ROLE
+========================= */
+.profile-card h2 {
+  margin-top: 10px;
+  margin-bottom: 4px;
+  font-size: 22px;
+}
+
+.role {
+  color: #777;
+  font-size: 13px;
+  margin-bottom: 24px;
+  letter-spacing: 1px;
+}
+
+/* =========================
+   PROFILE INFO
+========================= */
 .profile-info {
   text-align: left;
+  margin-top: 20px;
 }
 
 .profile-info div {
-  margin-bottom: 10px;
+  margin-bottom: 14px;
   font-size: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.profile-info strong {
+  min-width: 110px;
+  color: #333;
+}
+
+/* =========================
+   EDIT INPUTS
+========================= */
+.edit-input {
+  flex: 1;
+  padding: 8px 10px;
+  font-size: 14px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  outline: none;
+  transition: border 0.2s ease;
+}
+
+.edit-input:focus {
+  border-color: #0d8abc;
+  background: #f9fcff;
+}
+
+/* =========================
+   ACTION BUTTONS
+========================= */
+.profile-actions {
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* Edit / Save */
+.edit-btn,
+.save-btn {
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* Edit */
+.edit-btn {
+  background: #0d8abc;
+  color: #fff;
+}
+
+.edit-btn:hover {
+  background: #0b79a6;
+}
+
+/* Save */
+.save-btn {
+  background: #28a745;
+  color: #fff;
+}
+
+.save-btn:hover {
+  background: #218838;
+}
+
+/* Logout */
+.logout-btn {
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  background: #fff;
+  color: #444;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.logout-btn:hover {
+  background: #d74545;
+}
+
+/* =========================
+   LOADING TEXT
+========================= */
+.loading-text {
+  text-align: center;
+  margin-top: 80px;
+  font-size: 16px;
 }

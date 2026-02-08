@@ -28,6 +28,11 @@ const studentSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+
+    profilePic: {
+      type: String, // store file path or Base64 string
+    },
+ 
   },
   { timestamps: true }
 );
