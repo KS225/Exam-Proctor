@@ -1,0 +1,59 @@
+/* Main container */
+.classroom-container {
+  font-family: "Roboto", sans-serif;
+  background-color: #f1f3f4;
+  min-height: 100vh;
+}
+
+/* Header */
+.classroom-header {
+  background: linear-gradient(to right, #1a73e8, #4285f4);
+  color: white;
+  padding: 40px;
+  border-radius: 0 0 15px 15px;
+}
+
+.classroom-header h1 {
+  margin: 0;
+  font-size: 28px;
+}
+
+.classroom-header p {
+  margin-top: 8px;
+  opacity: 0.9;
+}
+
+/* Tabs */
+.classroom-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  background: white;
+  padding: 15px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.classroom-tabs button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 10px 15px;
+  color: #5f6368;
+  transition: 0.3s;
+}
+
+.classroom-tabs button:hover {
+  color: #1a73e8;
+}
+
+.classroom-tabs .active {
+  color: #1a73e8;
+  border-bottom: 3px solid #1a73e8;
+  font-weight: 600;
+}
+
+/* Content */
+.classroom-content {
+  padding: 30px;
+}

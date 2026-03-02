@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import "../styles/classcard.css";
 
 const ClassCard = ({
@@ -5,8 +6,14 @@ const ClassCard = ({
   subject = "Not specified",
   code = "N/A",
   studentsCount = 0,
-  onDelete, // only teacher passes this
+  onDelete,
 }) => {
+  const navigate = useNavigate();
+
+  const handleOpenClass = () => {
+    navigate("/classroom");   // 🔥 Simple navigation
+  };
+
   return (
     <div className="class-card">
       {/* Header */}
@@ -28,15 +35,19 @@ const ClassCard = ({
         </div>
       </div>
 
-      {/* Delete Icon – bottom right (teacher only) */}
+      {/* Open Button */}
+      <div style={{ marginTop: "10px", textAlign: "center" }}>
+        <button onClick={handleOpenClass}>
+          Open Classroom
+        </button>
+      </div>
+
+      {/* Delete Button */}
       {onDelete && (
         <button
           className="delete-icon-btn"
           title="Delete class"
-          onClick={(e) => {
-            e.stopPropagation();
-            onDelete();
-          }}
+          onClick={onDelete}
         >
           🗑️
         </button>
