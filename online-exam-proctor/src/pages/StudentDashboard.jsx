@@ -12,24 +12,20 @@ function StudentDashboard() {
 
   const navigate = useNavigate();
 
-  // 🔒 Auth Guard (redirect if not logged in)
-useEffect(() => {
-  if (!localStorage.getItem("token")) {
-    navigate("/", { replace: true });
-  }
-}, [navigate]);
-
+  // 🔒 Auth Guard
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      navigate("/", { replace: true });
+    }
+  }, [navigate]);
 
   // 🔐 Logout
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("role");
-    localStorage.removeItem("user");
-
+    localStorage.clear();
     navigate("/");
   };
 
-  // 🔐 Fetch classes
+  // 📥 Fetch joined classes
   useEffect(() => {
     const fetchClasses = async () => {
       try {
@@ -49,7 +45,7 @@ useEffect(() => {
         const data = await res.json();
         setClasses(data.classes || []);
       } catch (error) {
-        console.error("Dashboard error:", error.message);
+        console.error("Student dashboard error:", error.message);
       } finally {
         setLoading(false);
       }
@@ -98,11 +94,13 @@ useEffect(() => {
         <div className="dashboard-grid">
           {classes.map((cls) => (
             <ClassCard
-              key={cls._id}
-              title={cls.title}
-              teacher={cls.teacherName}
-              code={cls.code}
-            />
+  key={cls._id}
+  title={cls.title}
+  subject={cls.subject}   // ✅ NOW WORKS
+  code={cls.code}
+  studentsCount={cls.studentsCount}
+  onDelete={null} // no delete for students
+/>
           ))}
         </div>
       )}

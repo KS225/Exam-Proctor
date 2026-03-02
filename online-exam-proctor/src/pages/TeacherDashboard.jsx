@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import DashboardLayout from "../components/DashboardLayout";
 import ClassCard from "../components/ClassCard";
@@ -11,23 +11,83 @@ function TeacherDashboard() {
 
   const navigate = useNavigate();
 
-  // 🔐 Logout
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("role");
-    localStorage.removeItem("user");
-
+    localStorage.clear();
     navigate("/");
   };
 
-  const handleCreateClass = (newClass) => {
-    setClasses((prev) => [...prev, newClass]);
-    setShowModal(false);
+  /* =========================
+     CREATE CLASS
+     ========================= */
+  const handleCreateClass = async (newClass) => {
+    const res = await fetch("http://localhost:5000/api/teacher/classes", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify(newClass),
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      setClasses((prev) => [...prev, data]);
+      setShowModal(false);
+    } else {
+      alert(data.message);
+    }
   };
 
+  /* =========================
+     DELETE CLASS
+     ========================= */
+  const handleDeleteClass = async (classId) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this class?"
+    );
+
+    if (!confirmDelete) return;
+
+    const res = await fetch(
+      `http://localhost:5000/api/teacher/classes/${classId}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+
+    if (res.ok) {
+      setClasses((prev) => prev.filter((cls) => cls._id !== classId));
+    } else {
+      const data = await res.json();
+      alert(data.message);
+    }
+  };
+
+  /* =========================
+     LOAD CLASSES
+     ========================= */
+  useEffect(() => {
+    const fetchClasses = async () => {
+      const res = await fetch("http://localhost:5000/api/teacher/classes", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      const data = await res.json();
+      setClasses(data.classes || []);
+    };
+
+    fetchClasses();
+  }, []);
+
   return (
-    <DashboardLayout title="Classes">
-      {/* Top bar */}
+    <DashboardLayout title="Teacher Dashboard">
+      {/* TOP BAR */}
       <div className="dashboard-topbar">
         <h2>Your Classes</h2>
 
@@ -48,26 +108,28 @@ function TeacherDashboard() {
         </div>
       </div>
 
-      {/* Classes */}
+      {/* CONTENT */}
       {classes.length === 0 ? (
         <div className="empty-state">
-          <p>No classes created yet</p>
-          <span>Create a class to get started</span>
+          <h3>No classes yet</h3>
+          <p>Click “Create Class” to get started</p>
         </div>
       ) : (
         <div className="dashboard-grid">
-          {classes.map((cls, index) => (
+          {classes.map((cls) => (
             <ClassCard
-              key={index}
-              title={cls.title}
-              teacher="You"
-              code={cls.code}
-            />
-          ))}
+  key={cls._id}
+  title={cls.title}
+  subject={cls.subject}   // ✅ NOW WORKS
+  code={cls.code}
+  studentsCount={cls.students?.length || 0}
+  onDelete={() => handleDeleteClass(cls._id)}
+/>
+))}
         </div>
       )}
 
-      {/* Create Class Modal */}
+      {/* MODAL */}
       {showModal && (
         <CreateClassModal
           onClose={() => setShowModal(false)}

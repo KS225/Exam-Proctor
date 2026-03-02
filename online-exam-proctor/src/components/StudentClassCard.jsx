@@ -1,11 +1,11 @@
 import "../styles/classcard.css";
 
-const ClassCard = ({
-  title = "Untitled Class",
+const StudentClassCard = ({
+  title,
   subject = "Not specified",
-  code = "N/A",
+  code,
+  teacherName = "Unknown",
   studentsCount = 0,
-  onDelete, // only teacher passes this
 }) => {
   return (
     <div className="class-card">
@@ -18,6 +18,11 @@ const ClassCard = ({
       {/* Body */}
       <div className="class-card-body">
         <div className="class-info">
+          <p className="label">Teacher</p>
+          <strong>{teacherName}</strong>
+        </div>
+
+        <div className="class-info">
           <p className="label">Class Code</p>
           <strong>{code}</strong>
         </div>
@@ -27,22 +32,8 @@ const ClassCard = ({
           <strong>{studentsCount}</strong>
         </div>
       </div>
-
-      {/* Delete Icon – bottom right (teacher only) */}
-      {onDelete && (
-        <button
-          className="delete-icon-btn"
-          title="Delete class"
-          onClick={(e) => {
-            e.stopPropagation();
-            onDelete();
-          }}
-        >
-          🗑️
-        </button>
-      )}
     </div>
   );
 };
 
-export default ClassCard;
+export default StudentClassCard;

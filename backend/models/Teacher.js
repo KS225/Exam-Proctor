@@ -34,11 +34,8 @@ const teacherSchema = new mongoose.Schema(
       trim: true,
     },
 
-    /* ============================
-       PROFILE PHOTO
-    ============================ */
     profilePic: {
-      type: String, // base64 or URL
+      type: String, // base64 or image URL
       default: "",
     },
   },

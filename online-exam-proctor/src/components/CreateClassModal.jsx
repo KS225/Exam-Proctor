@@ -6,8 +6,8 @@ function CreateClassModal({ onClose, onCreate }) {
 
     const newClass = {
       title: e.target.title.value,
-      subject: e.target.subject.value,
-      code: Math.random().toString(36).substring(2, 8).toUpperCase()
+      subject: e.target.subject.value,   // ✅ ADD THIS
+      code: Math.random().toString(36).substring(2, 8).toUpperCase(),
     };
 
     onCreate(newClass);
@@ -23,23 +23,22 @@ function CreateClassModal({ onClose, onCreate }) {
           <input
             type="text"
             name="title"
-            placeholder="Class Name"
+            placeholder="Class Name (e.g. BE)"
             required
           />
+
           <input
             type="text"
             name="subject"
-            placeholder="Subject"
+            placeholder="Subject (e.g. WebX)"
             required
           />
 
           <div className="modal-actions">
-            <button type="button" className="btn cancel" onClick={onClose}>
+            <button type="button" onClick={onClose}>
               Cancel
             </button>
-            <button type="submit" className="btn create">
-              Create
-            </button>
+            <button type="submit">Create</button>
           </div>
         </form>
       </div>
