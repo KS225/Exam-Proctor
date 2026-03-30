@@ -1,0 +1,54 @@
+.participants-container{
+  width:700px;
+  margin:30px auto;
+  background:white;
+  padding:25px;
+  border-radius:8px;
+  box-shadow:0 4px 20px rgba(0,0,0,0.1);
+}
+
+.participant-section{
+  margin-top:25px;
+}
+
+.participant-card{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  padding:10px;
+  border-bottom:1px solid #eee;
+}
+
+.participant-card:hover{
+  background:#f8f8f8;
+}
+
+.avatar{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  background:#3b82f6;
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+}
+
+.teacher .avatar{
+  background:#16a34a;
+}
+
+.participant-info{
+  display:flex;
+  flex-direction:column;
+}
+
+.name{
+  font-weight:600;
+}
+
+.email{
+  font-size:13px;
+  color:#666;
+}

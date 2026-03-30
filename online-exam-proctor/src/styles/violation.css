@@ -1,0 +1,32 @@
+.violation-page {
+  padding: 20px;
+  background: #f8fafc;
+}
+
+.violation-card {
+  display: flex;
+  gap: 15px;
+  background: white;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.violation-card img {
+  width: 200px;
+  border-radius: 8px;
+}
+
+.info {
+  flex: 1;
+}
+
+.safe {
+  color: green;
+}
+
+.violation-card li {
+  color: red;
+  font-weight: bold;
+}

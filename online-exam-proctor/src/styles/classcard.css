@@ -1,0 +1,47 @@
+.class-card {
+  background: white;
+  padding: 18px;
+  border-radius: 10px;
+  width: 220px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.class-card:hover {
+  transform: translateY(-4px);
+}
+
+.class-card h3 {
+  margin-bottom: 6px;
+}
+
+.subject {
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.open-btn {
+  margin-top: 8px;
+  padding: 6px 12px;
+  border: none;
+  background: #1a73e8;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.delete-icon-btn {
+  background: transparent;
+  border: none;
+  color: #e53935;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 6px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.delete-icon-btn:hover {
+  background: rgba(229, 57, 53, 0.1);
+  color: #c62828;
+}

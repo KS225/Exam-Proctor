@@ -1,0 +1,252 @@
+/* =========================
+   Stream Container
+   ========================= */
+
+.stream-container {
+  max-width: 850px;
+  margin: auto;
+  padding: 25px;
+}
+
+
+/* =========================
+   Teacher Post Form
+   ========================= */
+
+.teacher-post-card {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 25px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.post-title {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  border: 1px solid #dadce0;
+  font-size: 15px;
+}
+
+.post-content {
+  width: 100%;
+  height: 80px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  border: 1px solid #dadce0;
+  resize: none;
+  font-size: 14px;
+}
+
+.post-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.post-btn {
+  padding: 8px 16px;
+  background-color: #1a73e8;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.post-btn:hover {
+  background-color: #1558b0;
+}
+
+
+/* =========================
+   Post Card
+   ========================= */
+
+.post-card {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  transition: box-shadow 0.2s ease, transform 0.15s ease;
+}
+
+.post-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transform: translateY(-2px);
+}
+
+
+/* =========================
+   Post Header
+   ========================= */
+
+.post-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.author-avatar {
+  width: 40px;
+  height: 40px;
+  background: #1a73e8;
+  color: #fff;
+  font-weight: bold;
+  font-size: 1rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.author-name {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.post-date {
+  color: #5f6368;
+  font-size: 0.85rem;
+}
+
+
+/* =========================
+   Post Content
+   ========================= */
+
+.post-card h3 {
+  margin: 0 0 10px 0;
+  font-size: 1.3rem;
+  color: #202124;
+}
+
+.post-card p {
+  margin-bottom: 10px;
+  color: #3c4043;
+  line-height: 1.5;
+  font-size: 1rem;
+}
+
+
+/* =========================
+   File Links
+   ========================= */
+
+.post-files {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.post-files a {
+  background: #f1f3f4;
+  padding: 5px 10px;
+  border-radius: 5px;
+  text-decoration: none;
+  color: #1a73e8;
+  font-size: 0.9rem;
+}
+
+.post-files a:hover {
+  background-color: #e8f0fe;
+}
+
+
+/* =========================
+   Comments
+   ========================= */
+
+.comments {
+  margin-top: 15px;
+  border-top: 1px solid #e0e0e0;
+  padding-top: 10px;
+}
+
+.comment {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.comment-avatar {
+  width: 30px;
+  height: 30px;
+  background: #5f6368;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+  font-size: 0.8rem;
+}
+
+.comment-body {
+  background: #f1f3f4;
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+
+/* =========================
+   Add Comment
+   ========================= */
+
+.add-comment {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.add-comment input {
+  flex: 1;
+  padding: 6px 10px;
+  border-radius: 5px;
+  border: 1px solid #dadce0;
+  font-size: 0.9rem;
+}
+
+.add-comment button {
+  padding: 6px 12px;
+  border-radius: 5px;
+  border: none;
+  background: #1a73e8;
+  color: #fff;
+  cursor: pointer;
+}
+
+.add-comment button:hover {
+  background-color: #1558b0;
+}
+
+
+/* =========================
+   Responsive
+   ========================= */
+
+@media (max-width: 600px) {
+
+  .add-comment {
+    flex-direction: column;
+  }
+
+  .add-comment button {
+    width: 100%;
+  }
+
+  .add-comment input {
+    width: 100%;
+  }
+
+}

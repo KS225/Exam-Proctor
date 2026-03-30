@@ -1,0 +1,35 @@
+.result-container {
+  padding: 30px;
+  max-width: 900px;
+  margin: auto;
+}
+
+.result-header {
+  background: #f8fafc;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.pass {
+  color: green;
+}
+
+.fail {
+  color: red;
+}
+
+.result-card {
+  border: 1px solid #e5e7eb;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.correct {
+  color: green;
+}
+
+.wrong {
+  color: red;
+}

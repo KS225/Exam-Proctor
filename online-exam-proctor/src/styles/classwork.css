@@ -1,0 +1,21 @@
+.classwork {
+  padding: 20px;
+}
+
+.assignment-card {
+  background: white;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.assignment-card textarea {
+  width: 100%;
+  margin-top: 10px;
+  padding: 8px;
+}
+
+.assignment-card button {
+  margin-top: 10px;
+}

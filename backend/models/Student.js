@@ -1,0 +1,39 @@
+const mongoose = require("mongoose");
+
+const studentSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+
+    password: {
+      type: String,
+      required: true,
+    },
+
+    rollNo: {
+      type: Number,
+      required: true,
+      unique: true,
+    },
+
+    department: {
+      type: String,
+      required: true,
+    },
+
+    profilePic: {
+      type: String, // can store file path or Base64 string
+    },
+  },
+  { timestamps: true }
+);
+
+module.exports = mongoose.model("Student", studentSchema);
