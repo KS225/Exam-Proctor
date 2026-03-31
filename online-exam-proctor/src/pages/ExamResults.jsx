@@ -61,7 +61,6 @@ function ExamResults() {
       ) : (
 
         <table className="results-table">
-
           <thead>
             <tr>
               <th>Rank</th> {/* ✅ ADD */}
@@ -72,7 +71,6 @@ function ExamResults() {
               <th>Attempt</th>
             </tr>
           </thead>
-
           <tbody>
 
 {[...results]
@@ -94,13 +92,15 @@ function ExamResults() {
       ? (score / totalMarks) * 100
       : 0;
 
-    const status =
-      r.violations > 3
-        ? "Disqualified"
-        : percentage >= 40
-        ? "Pass"
-        : "Fail";
+    const isDescriptive = r.examId?.type === "descriptive";
 
+const status = isDescriptive
+  ? "Pending"
+  : percentage >= 40
+  ? "Pass"
+  : "Fail";
+
+const isSuspicious = r.violations > 3;
     return (
 
       <tr key={r._id}>

@@ -290,6 +290,10 @@ router.get("/attempt/:attemptId", async (req, res) => {
 
 router.post("/grade", protect, async (req, res) => {
 
+  console.log("GRADE API HIT");
+  console.log("REQ.USER:", req.user);
+  console.log("BODY:", req.body);
+
   try {
 
     const { attemptId, marks, password } = req.body;
@@ -301,7 +305,9 @@ router.post("/grade", protect, async (req, res) => {
       });
     }
 
+    // ✅ Find attempt
     const attempt = await ExamAttempt.findById(attemptId);
+    console.log("ATTEMPT:", attempt);
 
     if (!attempt) {
       return res.status(404).json({
@@ -309,8 +315,9 @@ router.post("/grade", protect, async (req, res) => {
       });
     }
 
-    // ✅ Get exam to validate total marks
+    // ✅ Get exam
     const exam = await Exam.findById(attempt.examId);
+    console.log("EXAM:", exam);
 
     if (!exam) {
       return res.status(404).json({
@@ -318,7 +325,41 @@ router.post("/grade", protect, async (req, res) => {
       });
     }
 
-    // ✅ TOTAL MARKS VALIDATION
+    // ==============================
+    // ✅ PER QUESTION VALIDATION (FIXED)
+    // ==============================
+    for (let index in marks) {
+
+      const i = Number(index); // 🔥 important fix
+
+      const given = Number(marks[index] || 0);
+
+      if (!exam.questions[i]) {
+        return res.status(400).json({
+          message: `Invalid question index ${i + 1}`
+        });
+      }
+
+      const maxMarks = Number(exam.questions[i].marks || 0);
+
+      console.log(`Q${i + 1}: given=${given}, max=${maxMarks}`);
+
+      if (given > maxMarks) {
+        return res.status(400).json({
+          message: `Marks for Question ${i + 1} cannot exceed ${maxMarks}`
+        });
+      }
+
+      if (given < 0) {
+        return res.status(400).json({
+          message: `Marks for Question ${i + 1} cannot be negative`
+        });
+      }
+    }
+
+    // ==============================
+    // ✅ TOTAL VALIDATION
+    // ==============================
     const totalAllowed = exam.questions.reduce(
       (sum, q) => sum + Number(q.marks || 0),
       0
@@ -335,11 +376,16 @@ router.post("/grade", protect, async (req, res) => {
       });
     }
 
-    // ✅ PASSWORD CHECK (only if already graded)
-    if (
+    // ==============================
+    // ✅ PASSWORD CHECK (ONLY IF EDITING)
+    // ==============================
+    const alreadyGraded =
       attempt.marksGiven &&
-      Object.keys(attempt.marksGiven).length > 0
-    ) {
+      Object.values(attempt.marksGiven).some(m => Number(m) > 0);
+
+    console.log("ALREADY GRADED:", alreadyGraded);
+
+    if (alreadyGraded) {
 
       if (!password) {
         return res.status(403).json({
@@ -348,29 +394,38 @@ router.post("/grade", protect, async (req, res) => {
       }
 
       const teacher = await Teacher.findById(teacherId);
+      console.log("TEACHER:", teacher);
 
-      if (!teacher) {
-        return res.status(404).json({
-          message: "Teacher not found"
-        });
-      }
+      if (teacher) {
+        const valid = await bcrypt.compare(
+          password,
+          teacher.password
+        );
 
-      const valid = await bcrypt.compare(
-        password,
-        teacher.password
-      );
-
-      if (!valid) {
-        return res.status(401).json({
-          message: "Invalid password"
-        });
+        if (!valid) {
+          return res.status(401).json({
+            message: "Invalid password"
+          });
+        }
+      } else {
+        console.log("Teacher not found — skipping password validation");
       }
     }
 
+    // ==============================
     // ✅ SAVE MARKS
+    // ==============================
     attempt.marksGiven = marks;
 
+    // 🔥 CRITICAL: update total score
+    attempt.totalScore = Object.values(marks).reduce(
+      (sum, m) => sum + Number(m || 0),
+      0
+    );
+
     await attempt.save();
+
+    console.log("✅ MARKS SAVED");
 
     res.json({
       message: "Marks saved successfully",
@@ -389,6 +444,5 @@ router.post("/grade", protect, async (req, res) => {
   }
 
 });
-
 
 module.exports = router;

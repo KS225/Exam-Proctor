@@ -35,6 +35,8 @@ function AttemptView() {
 
   const exam = attempt?.examId;
 
+  const isDescriptive = exam?.type === "descriptive";
+
   // ✅ Total allowed marks
   const totalAllowedMarks = exam
     ? exam.questions.reduce((sum, q) => sum + Number(q.marks || 0), 0)
@@ -46,28 +48,44 @@ function AttemptView() {
     0
   );
 
-  const handleMarksChange = (qIndex, value) => {
+const handleMarksChange = (qIndex, value) => {
 
-    const updatedMarks = {
-      ...marks,
-      [qIndex]: value
-    };
+  const maxMarks = Number(exam.questions[qIndex]?.marks || 0);
 
-    const total = Object.values(updatedMarks).reduce(
-      (sum, m) => sum + Number(m || 0),
-      0
-    );
+  if (value > maxMarks) {
+    alert(`Max allowed is ${maxMarks}`);
+    return;
+  }
 
-    // ❌ Prevent exceeding total
-    if (total > totalAllowedMarks) {
-      alert(`Total marks cannot exceed ${totalAllowedMarks}`);
-      return;
-    }
+  if (value < 0) {
+    alert("Marks cannot be negative");
+    return;
+  }
 
-    setMarks(updatedMarks);
+  const updatedMarks = {
+    ...marks,
+    [qIndex]: value
   };
 
+  const total = Object.values(updatedMarks).reduce(
+    (sum, m) => sum + Number(m || 0),
+    0
+  );
+
+  if (total > totalAllowedMarks) {
+    alert(`Total marks cannot exceed ${totalAllowedMarks}`);
+    return;
+  }
+
+  setMarks(updatedMarks);
+};
+
   const saveMarks = async () => {
+
+    if (!isDescriptive) {
+      alert("Manual grading is only allowed for descriptive exams");
+      return;
+    }
 
     if (Object.keys(marks).length === 0) {
       alert("Please enter marks before saving");
@@ -85,6 +103,7 @@ function AttemptView() {
     try {
 
       const token = localStorage.getItem("token");
+      console.log("TOKEN:", token); // 🔍 DEBUG
 
       const res = await fetch(
         "http://localhost:5000/api/exams/grade",
@@ -106,8 +125,8 @@ function AttemptView() {
 
       if (!res.ok) {
 
-        // ✅ Password flow (NOT error)
-        if (data?.message?.includes("Password required")) {
+        // ✅ Password required flow
+       if (res.status === 403 && data?.message?.includes("Password")) {
           setShowPassword(true);
           setLoading(false);
           return;
@@ -121,11 +140,15 @@ function AttemptView() {
         return;
       }
 
-      alert("Marks saved successfully");
+      alert("Marks saved successfully ✅");
 
       setShowPassword(false);
       setPassword("");
+      setMarks({});
       setLoading(false);
+
+      // 🔄 Refresh updated data
+      fetchAttempt();
 
     } catch (err) {
       console.log(err);
@@ -145,15 +168,18 @@ function AttemptView() {
         <div className="student-info">
           <p><b>Student:</b> {attempt.studentId?.name}</p>
           <p><b>Violations:</b> {attempt.violations}</p>
+          <p><b>Type:</b> {exam.type}</p>
         </div>
       </div>
 
       <hr />
 
       {/* ✅ TOTAL DISPLAY */}
-      <div className="total-marks">
-        <b>Total:</b> {totalGivenMarks} / {totalAllowedMarks}
-      </div>
+      {isDescriptive && (
+        <div className="total-marks">
+          <b>Total:</b> {totalGivenMarks} / {totalAllowedMarks}
+        </div>
+      )}
 
       <div className="questions-section">
 
@@ -172,18 +198,34 @@ function AttemptView() {
               {attempt.answers[index] || "No answer"}
             </div>
 
-            <div className="grading">
-              <label>Marks Given</label>
+            {/* ✅ Only show grading for descriptive */}
+            {isDescriptive && (
+              <div className="grading">
+                <label>Marks Given</label>
 
-              <input
-                type="number"
-                min="0"
-                max={q.marks}
-                onChange={(e) =>
-                  handleMarksChange(index, Number(e.target.value))
-                }
-              />
-            </div>
+                <input
+                  type="number"
+                  min="0"
+                  max={q.marks}
+                  value={marks[index] || ""}
+                  onChange={(e) => {
+  const value = Number(e.target.value);
+
+  if (value > q.marks) {
+    alert(`Max allowed for this question is ${q.marks}`);
+    return;
+  }
+
+  if (value < 0) {
+    alert("Marks cannot be negative");
+    return;
+  }
+
+  handleMarksChange(index, value);
+}}
+                />
+              </div>
+            )}
 
           </div>
 
@@ -191,10 +233,13 @@ function AttemptView() {
 
       </div>
 
-      <button className="save-btn" onClick={saveMarks}>
-        Save Marks
-      </button>
-
+      {/* ✅ Save only for descriptive */}
+      {isDescriptive && (
+        <button className="save-btn" onClick={saveMarks}>
+          {loading ? "Saving..." : "Save Marks"}
+        </button>
+      )}
+      
       <button
         className="backbtn"
         onClick={() => navigate(-1)}
